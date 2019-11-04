@@ -80,7 +80,7 @@ The arguments are similar to those presented in the challenge with the exception
 ## Other notes
 
 The solution begins in the unbabel_cli.py script that implements a CLI that parses the necessary arguments and starts the translation events processing.
-The implementation was separated in three classes.
+The implementation was separated into three classes.
 
 ### EventStreamReader
 
@@ -88,10 +88,10 @@ Implements an iterator that reads a file in JSON lines format one event at a tim
 
 ### TimeslotDurationAverage
 
-This class has functions to support the average calculation. It saves of the current window of events from where the average for the current timeslot (current minute minus window_size) is calculated. This window of events get cleaned from events outside the window size in order to save memory space.
+This class has functions to support the average calculation. It stores the current window of events from where the average for the current timeslot (current minute minus window_size) is calculated. This window of events gets cleaned from events outside the window size to save memory space.
 
 ### ResultsWriter
 
 Class that writes dictionaries in JSON lines format to a file.
 
-In the main file (unbabel_cli.py) these classes are instatiated with the arguments given on the command and there is a loop that iterates through the events from the translation files and calculates the averages minute by minute.
+In the main file (unbabel_cli.py) these classes are instantiated with the arguments given on the command and there is a loop that iterates through the events from the translation files and calculates the averages minute by minute.
