@@ -6,23 +6,24 @@ This is my solution to the challenge
 
 This project uses Python 3.5 and pipenv.
 
-If you have other version use pyenv.
+If you have other Python version use pyenv.
 
 Install pyenv:
 
-``` $brew install pyenv ```
+``` $ brew install pyenv ```
 
 Install Python 3.5:
 
-``` $pyenv install 3.5.0 ```
+``` $ pyenv install 3.5.0 ```
 
 Change global version to 3.5.1:
 
-``` $pyenv global 3.5.1 ```
+``` $ pyenv global 3.5.1 ```
 
 Verify change:
 
-``` $python --version 
+``` 
+$ python --version 
 
 Python 3.5.0
 ```
@@ -33,24 +34,24 @@ https://github.com/pyenv/pyenv#understanding-shims
 
 Then install pipenv to manage Python version and dependencies (present in Pipenv file)
 
-``` pip install pipenv ```
+```$ pip install pipenv ```
 
 In the Pipenv file we can see the Python version and the package versions used by the solution.
 
 To install dependencies run:
 
-``` pipenv install ```
+```$ pipenv install ```
 
 This generates a Pipfile.lock with the packages that will be used by the application.
 
 The solution has some tests that can be used. In the root of the project run:
 
-``` pipenv run pytest ```
+```$ pipenv run pytest ```
 
 To use the application run the following command with the necessary arguments:
 
 ``` 
-pipenv run python unbabel_cli.py --input_file tests/data/events_test.json --window_size 10 --output_file results.json
+$ pipenv run python unbabel_cli.py --input_file tests/data/events_test.json --window_size 10 --output_file results.json
 
 ```
 This will output the result present in the challeng README page.
@@ -58,7 +59,7 @@ This will output the result present in the challeng README page.
 To understand what the arguments mean run:
 
 ```
-pipenv run python unbabel_cli.py --help 
+$ pipenv run python unbabel_cli.py --help 
 
 Usage: unbabel_cli.py [OPTIONS]
 
