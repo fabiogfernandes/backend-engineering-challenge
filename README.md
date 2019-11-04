@@ -1,88 +1,92 @@
 # Backend Engineering Challenge
 
+This is my solution to the challenge
 
-Welcome to our Engineering Challenge repository 🖖
+## Installation
 
-If you found this repository it probably means that you are participating in our recruitment process. Thank you for your time and energy. If that's not the case please take a look at our [openings](https://unbabel.com/careers/) and apply!
+This project uses Python 3.5 and pipenv.
 
-Please fork this repo before you start working on the challenge, read it careful and take your time and think about the solution. Also, please fork this repository because we will evaluate the code on the fork.
+If you have other version use pyenv.
 
-This is an opportunity for us both to work together and get to know each other in a more technical way. If have some doubt please open and issue and we'll reach out to help.
+Install pyenv:
 
-Good luck!
+``` $brew install pyenv ```
 
-## Challenge Scenario
+Install Python 3.5:
 
-At Unbabel we deal with a lot of translation data. One of the metrics we use for our clients' SLAs is the delivery time of a translation. 
+``` $pyenv install 3.5.0 ```
 
-In the context of this problem, and to keep things simple, our translation flow is going to be modeled as only one event.
+Change global version to 3.5.1:
 
-### *translation_delivered*
+``` $pyenv global 3.5.1 ```
 
-Example:
+Verify change:
 
-```json
-{
-	"timestamp": "2018-12-26 18:12:19.903159",
-	"translation_id": "5aa5b2f39f7254a75aa4",
-	"source_language": "en",
-	"target_language": "fr",
-	"client_name": "easyjet",
-	"event_name": "translation_delivered",
-	"duration": 20,
-	"nr_words": 100
-}
+``` $python --version 
+
+Python 3.5.0
 ```
 
-## Challenge Objective
+If version does not change verify if you have pyenv shims directory in your PATH.
 
-Your mission is to build a simple command line application that parses a stream of events and produces an aggregated output. In this case, we're interested in calculating, for every minute, a moving average of the translation delivery time for the last X minutes.
+https://github.com/pyenv/pyenv#understanding-shims
 
-If we want to count, for each minute, the moving average delivery time of all translations for the past 10 minutes we would call your application like (feel free to name it anything you like!).
+Then install pipenv to manage Python version and dependencies (present in Pipenv file)
 
-	unbabel_cli --input_file events.json --window_size 10
-	
-The input file format would be something like:
+``` pip install pipenv ```
 
-	{"timestamp": "2018-12-26 18:11:08.509654","translation_id": "5aa5b2f39f7254a75aa5","source_language": "en","target_language": "fr","client_name": "easyjet","event_name": "translation_delivered","nr_words": 30, "duration": 20}
-	{"timestamp": "2018-12-26 18:15:19.903159","translation_id": "5aa5b2f39f7254a75aa4","source_language": "en","target_language": "fr","client_name": "easyjet","event_name": "translation_delivered","nr_words": 30, "duration": 31}
-	{"timestamp": "2018-12-26 18:23:19.903159","translation_id": "5aa5b2f39f7254a75bb33","source_language": "en","target_language": "fr","client_name": "booking","event_name": "translation_delivered","nr_words": 100, "duration": 54}
+In the Pipenv file we can see the Python version and the package versions used by the solution.
 
+To install dependencies run:
 
-The output file would be something in the following format.
+``` pipenv install ```
+
+This generates a Pipfile.lock with the packages that will be used by the application.
+
+The solution has some tests that can be used. In the root of the project run:
+
+``` pipenv run pytest ```
+
+To use the application run the following command with the necessary arguments:
+
+``` 
+pipenv run python unbabel_cli.py --input_file tests/data/events_test.json --window_size 10 --output_file results.json
 
 ```
-{"date": "2018-12-26 18:11:00", "average_delivery_time": 0}
-{"date": "2018-12-26 18:12:00", "average_delivery_time": 20}
-{"date": "2018-12-26 18:13:00", "average_delivery_time": 20}
-{"date": "2018-12-26 18:14:00", "average_delivery_time": 20}
-{"date": "2018-12-26 18:15:00", "average_delivery_time": 20}
-{"date": "2018-12-26 18:16:00", "average_delivery_time": 25.5}
-{"date": "2018-12-26 18:17:00", "average_delivery_time": 25.5}
-{"date": "2018-12-26 18:18:00", "average_delivery_time": 25.5}
-{"date": "2018-12-26 18:19:00", "average_delivery_time": 25.5}
-{"date": "2018-12-26 18:20:00", "average_delivery_time": 25.5}
-{"date": "2018-12-26 18:21:00", "average_delivery_time": 25.5}
-{"date": "2018-12-26 18:22:00", "average_delivery_time": 31}
-{"date": "2018-12-26 18:23:00", "average_delivery_time": 31}
-{"date": "2018-12-26 18:24:00", "average_delivery_time": 42.5}
+This will output the result present in the challeng README page.
+
+To understand what the arguments mean run:
+
+```
+pipenv run python unbabel_cli.py --help 
+
+Usage: unbabel_cli.py [OPTIONS]
+
+Options:
+  --input_file PATH            File in JSON format to read translation events
+                               (must exists).
+  --window_size INTEGER RANGE  Average window size in minutes.
+  --output_file PATH           File to store the translation average info.
+  --help                       Show this message and exit.
 ```
 
-#### Notes
+The arguments are similar to the presented in the challenge with the exception of "output_file" that refers to the file where the results must be stored.
 
-Before jumping right into implementation we advise you to think about the solution first. We will evaluate, not only if your solution works but also the following aspects:
+Notes:
 
-+ Simple and easy to read code. Remember that [simple is not easy](https://www.infoq.com/presentations/Simple-Made-Easy)
-+ Include a README.md that briefly describes how to build and run your code
-+ Be consistent in your code. 
+The solution begins in the unbabel_cli.py script that implements a CLI that parses the necessary arguments and starts the translation events processing.
+The implementation was separated in three classes.
 
-Feel free to, in your solution, include some your considerations while doing this challenge. We want you to solve this challenge in the language you feel most confortable with. Our machines run Python, Ruby, Scala, Java, Clojure, Elixir and Nodejs. If you are thinking of using any other programming language please reach out to us first 🙏.
+* EventStreamReader
 
-Also if you have any problem please **open an issue**. 
+Implements an iterator that reads a file in JSON lines format one event at a time. Ignores malformed JSON and events that do not have the necessary fields for the average calculation.
 
-Good luck and may the force be with you
+* TimeslotDurationAverage
 
-#### Extra points
+This class has functions to support the average calculation. It saves of the current window of events from where the average for the current timeslot (current minute minus window_size) is calculated. This window of events get cleaned from events outside the window size in order to save memory space.
 
-If you feeling creative feel free to consider any additional cases you might find interesting. Remember this is a bonus, focus on delivering the solution first.
+* ResultsWriter
 
+Class that writes dictionaries in JSON lines format to a file.
+
+In the main file (unbabel_cli.py) these classes are instatiated with the arguments given on the command and there is a loop that iterates through the events from the translation files and calculates the averages minute by minute.
