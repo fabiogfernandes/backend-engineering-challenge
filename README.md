@@ -38,7 +38,7 @@ Then install pipenv to manage Python version and dependencies (present in Pipenv
 
 In the Pipenv file we can see the Python version and the package versions used by the solution.
 
-To install dependencies run:
+In the root of the project to install dependencies run:
 
 ```$ pipenv install ```
 
