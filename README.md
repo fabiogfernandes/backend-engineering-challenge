@@ -44,9 +44,13 @@ In the root of the project to install dependencies run:
 
 This generates a Pipfile.lock with the packages that will be used by the application.
 
+## Tests
+
 The solution has some tests that can be used. In the root of the project run:
 
 ```$ pipenv run pytest ```
+
+## Usage
 
 To use the application run the following command with the necessary arguments:
 
@@ -54,7 +58,7 @@ To use the application run the following command with the necessary arguments:
 $ pipenv run python unbabel_cli.py --input_file tests/data/events_test.json --window_size 10 --output_file results.json
 
 ```
-This will output the result present in the challeng README page.
+This will output the result present in the challenge README page.
 
 To understand what the arguments mean run:
 
@@ -71,22 +75,22 @@ Options:
   --help                       Show this message and exit.
 ```
 
-The arguments are similar to the presented in the challenge with the exception of "output_file" that refers to the file where the results must be stored.
+The arguments are similar to those presented in the challenge with the exception of "output_file" that refers to the file where the results must be stored.
 
-Notes:
+## Other notes
 
 The solution begins in the unbabel_cli.py script that implements a CLI that parses the necessary arguments and starts the translation events processing.
 The implementation was separated in three classes.
 
-* EventStreamReader
+### EventStreamReader
 
 Implements an iterator that reads a file in JSON lines format one event at a time. Ignores malformed JSON and events that do not have the necessary fields for the average calculation.
 
-* TimeslotDurationAverage
+### TimeslotDurationAverage
 
 This class has functions to support the average calculation. It saves of the current window of events from where the average for the current timeslot (current minute minus window_size) is calculated. This window of events get cleaned from events outside the window size in order to save memory space.
 
-* ResultsWriter
+### ResultsWriter
 
 Class that writes dictionaries in JSON lines format to a file.
 
