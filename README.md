@@ -16,9 +16,9 @@ Install Python 3.5:
 
 ``` $ pyenv install 3.5.0 ```
 
-Change global version to 3.5.1:
+Change global version to 3.5.0:
 
-``` $ pyenv global 3.5.1 ```
+``` $ pyenv global 3.5.0 ```
 
 Verify change:
 
